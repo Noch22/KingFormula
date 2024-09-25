@@ -3,7 +3,7 @@ import Headerbutton from "./Headerbutton";
 
 export default function header(props) {
   return (
-    <header className="w-full flex items-center space-x-8 justify-center p-1 sticky top-0 bg-base-100 z-10">
+    <header className="w-full flex items-center space-x-8 justify-center p-1 sticky top-0 bg-base-100 z-10 shadow-md">
       <div>
         <h1 className="text-4xl w-full justify-center flex">KingFormula</h1>
       </div>
@@ -30,21 +30,16 @@ export default function header(props) {
               </div>
             </li>
             <li className="p-2">
-              <Headerbutton
-                nom="Saisons"
-                lien=""
-                active={`${props.active === "nutrition" ? "active" : ""}`}
-              />
-            </li>
-            <li className="p-2">
               <details className="dropdown">
                 <summary className="btn btn-ghost m-1">Qualifications</summary>
                 <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                   <li>
                     <Headerbutton
-                      nom="Résultats de qualifications"
-                      lien=""
-                      active={`${props.active === "famille" ? "active" : ""}`}
+                      nom="Derniers résultats de qualifications"
+                      lien="/lastqualif"
+                      active={`${
+                        props.active === "lastqualif" ? "active" : ""
+                      }`}
                     />
                   </li>
                   <li className="text-left">
