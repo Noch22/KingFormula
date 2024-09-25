@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Searchbar from "../components/searchbar";
-import Sendbutton from "../components/button";
 import Header from "../components/header";
 import FetchResults from "../fetching/FetchResults";
 
