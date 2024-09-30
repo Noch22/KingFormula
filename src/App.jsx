@@ -5,6 +5,9 @@ import Home from "./pages/home";
 import Nom from "./pages/results";
 import Last from "./pages/last";
 import Lastqualif from "./pages/lastqualifs";
+import Construct from "./pages/construct";
+import Pit from "./pages/pit";
+import Search from "./pages/search";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -17,6 +20,9 @@ function App() {
           <Route path="/results" element={<Nom />} />
           <Route path="/last" element={<Last />} />
           <Route path="/lastqualif" element={<Lastqualif />} />
+          <Route path="/constructeurs" element={<Construct />} />
+          <Route path="/pitstops" element={<Pit />} />
+          <Route path="/search" element={<Search />} />
         </Routes>
       </BrowserRouter>
     </>

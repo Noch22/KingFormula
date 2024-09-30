@@ -2,7 +2,7 @@ import React from "react";
 
 import { useState, useEffect } from "react";
 
-const Fetchqualifs = () => {
+const Fetchconstruct = () => {
   const [resultat, setResultat] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -110,7 +110,7 @@ const Fetchqualifs = () => {
   };
 
   return (
-    <div className="overflow-x-auto w-5/6 place-content-center">
+    <div>
       <div className="flex flex-row- justify-between items-center m-5 bg-base-200 p-3 rounded">
         <div>
           <h1 className="text-xl font-medium">
@@ -231,4 +231,4 @@ const Fetchqualifs = () => {
   );
 };
 
-export default Fetchqualifs;
+export default Fetchconstruct;

@@ -31,22 +31,22 @@ export default function header(props) {
             </li>
             <li className="p-2">
               <details className="dropdown">
-                <summary className="btn btn-ghost m-1">Qualifications</summary>
+                <summary className="btn btn-ghost">Données de courses</summary>
                 <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
                   <li>
                     <Headerbutton
-                      nom="Derniers résultats de qualifications"
+                      nom="🥇 Derniers résultats de qualifications"
                       lien="/lastqualif"
                       active={`${
                         props.active === "lastqualif" ? "active" : ""
                       }`}
                     />
                   </li>
-                  <li className="text-left">
+                  <li className="text-center">
                     <Headerbutton
-                      nom="Résultats de qualifications"
-                      lien=""
-                      active={`${props.active === "famille" ? "active" : ""}`}
+                      nom="🚥 Dernières données de PitStops"
+                      lien="/pitstops"
+                      active={`${props.active === "pit" ? "active" : ""}`}
                     />
                   </li>
                 </ul>
@@ -54,9 +54,16 @@ export default function header(props) {
             </li>
             <li className="p-2">
               <Headerbutton
-                nom="Par genre"
-                lien=""
-                active={`${props.active === "genre" ? "active" : ""}`}
+                nom="Constructeurs"
+                lien="/constructeurs"
+                active={`${props.active === "constructeurs" ? "active" : ""}`}
+              />
+            </li>
+            <li className="p-2">
+              <Headerbutton
+                nom="Rechercher"
+                lien="/search"
+                active={`${props.active === "search" ? "active" : ""}`}
               />
             </li>
           </ul>

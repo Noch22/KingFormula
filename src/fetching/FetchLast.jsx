@@ -147,8 +147,6 @@ const FetchLast = () => {
           </div>
         </div>
       </div>
-
-      <div></div>
       <table className="table">
         {/* head */}
         <thead>
@@ -156,7 +154,12 @@ const FetchLast = () => {
             <th>Place</th>
             <th>Nom</th>
             <th>Constructeur</th>
-            <th>Vitesse moyenne</th>
+            <th className="flex flex-col items-center">Vitesse moyenne</th>
+            <th>Points</th>
+            <th>Tours</th>
+            <th className="flex flex-col items-center">
+              Tour le plus rapide⚡
+            </th>
             <th></th>
           </tr>
         </thead>
@@ -195,13 +198,18 @@ const FetchLast = () => {
                   {flags[item.Constructor.nationality] || "🏳"}
                 </span>
               </td>
-              <td>
+              <td className="flex flex-col justify-center items-center">
                 {item.FastestLap?.AverageSpeed?.speed || "N/A"} Km/h{" "}
                 {index === fastestDriverIndex && (
                   <span className="indicator-item badge badge-secondary ml-2">
                     plus rapide⚡
                   </span>
                 )}
+              </td>
+              <td>{item.points}</td>
+              <td>{item.laps}</td>
+              <td className="flex flex-col items-center justify-center">
+                {item.FastestLap.Time.time} (Tour {item.FastestLap.lap}){" "}
                 {item.FastestLap.rank === "1" && (
                   <span className="indicator-item badge badge-primary ml-2">
                     meilleur tour🚀
