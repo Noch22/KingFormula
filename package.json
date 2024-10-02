@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "postbuild": "copy .cpanel.yml dist\\",
     "lint": "eslint .",
     "preview": "vite preview"
   },

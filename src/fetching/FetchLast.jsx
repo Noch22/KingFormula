@@ -122,6 +122,12 @@ const FetchLast = () => {
     Liechtensteiner: "🇱🇮",
   };
 
+  const medalIcons = {
+    25: "🥇",
+    18: "🥈",
+    15: "🥉",
+  };
+
   return (
     <div className="overflow-x-auto w-5/6 place-content-center">
       <div className="flex flex-row- justify-between items-center m-5 bg-base-200 p-3 rounded">
@@ -174,7 +180,7 @@ const FetchLast = () => {
                       <img
                         src={
                           photos[item.Driver.driverId] ||
-                          "https://img.daisyui.com/images/profile/demo/2@94.webp"
+                          "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/800px-No_image_available.svg.png"
                         }
                         alt={`${item.Driver.givenName} ${item.Driver.familyName}`}
                       />
@@ -206,7 +212,12 @@ const FetchLast = () => {
                   </span>
                 )}
               </td>
-              <td>{item.points}</td>
+              <td>
+                {item.points}{" "}
+                {medalIcons[item.points] && (
+                  <span>{medalIcons[item.points]}</span>
+                )}
+              </td>
               <td>{item.laps}</td>
               <td className="flex flex-col items-center justify-center">
                 {item.FastestLap.Time.time} (Tour {item.FastestLap.lap}){" "}
