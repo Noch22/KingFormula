@@ -32,5 +32,6 @@
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.12",
     "vite": "^5.4.1"
-  }
+  },
+  "homepage": "http://node.pigu9463.odns.fr/"
 }
