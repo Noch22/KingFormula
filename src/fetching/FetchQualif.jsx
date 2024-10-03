@@ -1,4 +1,5 @@
 import React from "react";
+import Skeleton from "../components/skeleton";
 
 import { useState, useEffect } from "react";
 
@@ -57,7 +58,7 @@ const Fetchqualifs = () => {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Skeleton />;
   }
 
   if (hasError) {

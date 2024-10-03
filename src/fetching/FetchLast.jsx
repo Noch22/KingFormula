@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Skeleton from "../components/skeleton";
 
 const FetchLast = () => {
   const [resultat, setResultat] = useState([]);
@@ -70,7 +71,7 @@ const FetchLast = () => {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Skeleton />;
   }
 
   if (hasError) {
