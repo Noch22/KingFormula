@@ -3,6 +3,28 @@ import React from "react";
 export default function skeleton() {
   return (
     <div className="overflow-x-auto w-5/6 place-content-center">
+      <div className="flex flex-row- justify-between items-center m-5 bg-base-200 p-3 rounded">
+        <div>
+          <h1 className="text-xl font-medium">
+            Les derniers résultats de qualifications
+          </h1>
+          <p className="text-sm opacity-70">Informations de la course</p>
+        </div>
+        <div className="flex gap-5 flex-row">
+          <div>
+            <p className="text-sm opacity-70">Circuit</p>
+            <div className="skeleton w-20 h-8"></div>
+          </div>
+          <div>
+            <p className="text-sm opacity-70">Ville</p>
+            <div className="skeleton w-20 h-8"></div>
+          </div>
+          <div>
+            <p className="text-sm opacity-70">Date</p>
+            <div className="skeleton w-20 h-8"></div>
+          </div>
+        </div>
+      </div>
       <table className="table">
         {/* head */}
         <thead>
