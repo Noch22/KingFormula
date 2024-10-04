@@ -6,14 +6,14 @@ export default function skeleton() {
       <div className="flex flex-row- justify-between items-center m-5 bg-base-200 p-3 rounded">
         <div>
           <h1 className="text-xl font-medium">
-            Les derniers résultats de qualifications
+            <div className="skeleton w-56 h-10"></div>
           </h1>
           <p className="text-sm opacity-70">Informations de la course</p>
         </div>
         <div className="flex gap-5 flex-row">
           <div>
             <p className="text-sm opacity-70">Circuit</p>
-            <div className="skeleton w-20 h-8"></div>
+            <div className="skeleton w-32 h-8"></div>
           </div>
           <div>
             <p className="text-sm opacity-70">Ville</p>
@@ -29,14 +29,26 @@ export default function skeleton() {
         {/* head */}
         <thead>
           <tr>
-            <th>Place</th>
-            <th>Nom</th>
-            <th>Constructeur</th>
-            <th className="flex flex-col items-center">Vitesse moyenne</th>
-            <th>Points</th>
-            <th>Tours</th>
+            <th>
+              <div className="skeleton w-20 h-8"></div>
+            </th>
+            <th>
+              <div className="skeleton w-20 h-8"></div>
+            </th>
+            <th>
+              <div className="skeleton w-20 h-8"></div>
+            </th>
             <th className="flex flex-col items-center">
-              Tour le plus rapide⚡
+              <div className="skeleton w-20 h-8"></div>
+            </th>
+            <th>
+              <div className="skeleton w-20 h-8"></div>
+            </th>
+            <th>
+              <div className="skeleton w-20 h-8"></div>
+            </th>
+            <th className="flex flex-col items-center">
+              <div className="skeleton w-20 h-8"></div>
             </th>
             <th></th>
           </tr>
@@ -81,15 +93,6 @@ export default function skeleton() {
           ))}
         </tbody>
         {/* foot */}
-        <tfoot>
-          <tr>
-            <th>Place</th>
-            <th>Nom</th>
-            <th>Constructeur</th>
-            <th>Vitesse moyenne</th>
-            <th></th>
-          </tr>
-        </tfoot>
       </table>
     </div>
   );
