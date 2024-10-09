@@ -5,18 +5,22 @@ export default function header(props) {
   return (
     <header className="w-full flex items-center space-x-8 justify-center p-1 sticky top-0 bg-base-100 z-10 shadow-md">
       <div>
-        <h1 className="text-4xl w-full justify-center flex">KingFormula</h1>
+        <a href="/">
+          <h1 className="text-4xl w-full justify-center flex font-king-font">
+            KingFormula®
+          </h1>
+        </a>
       </div>
       <div>
         <nav>
           <ul className="flex justify-center">
-            <li className="p-2">
+            {/* <li className="p-2">
               <Headerbutton
                 nom="Accueil"
                 lien="/"
                 active={`${props.active === "home" ? "active" : ""}`}
               />
-            </li>
+            </li> */}
             <li className="p-2">
               <div className="indicator">
                 <span className="indicator-item badge badge-primary">new</span>

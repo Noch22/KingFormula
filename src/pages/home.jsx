@@ -12,7 +12,7 @@ export default function home() {
           <div className="hero-content flex-col lg:flex-row-reverse">
             <img src="/image.jpeg" className="max-w-sm rounded-lg shadow-2xl" />
             <div>
-              <h1 className="text-5xl font-bold">KingFormula®</h1>
+              <h1 className="text-5xl font-king-font">KingFormula®</h1>
               <p className="py-6">
                 Découvrez les derniers résultats de la Formule 1 sur
                 KingFormula®. Visitez les différentes pages pour en savoir plus

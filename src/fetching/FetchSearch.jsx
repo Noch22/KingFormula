@@ -99,6 +99,7 @@ const Fetchsearch = () => {
               className="input input-bordered w-full max-w-xs"
               value={piloteNom}
               onChange={(e) => setPiloteNom(e.target.value)} // Update piloteNom state
+              required={true}
             />
             <button className="btn" onClick={handleSearch}>
               Chercher

@@ -1,4 +1,5 @@
 import React from "react";
+import Skeleton from "../components/skeleton";
 
 import { useState, useEffect } from "react";
 
@@ -6,23 +7,46 @@ const Fetchconstruct = () => {
   const [resultat, setResultat] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [fastestDriverIndex, setFastestDriverIndex] = useState(null);
   const [photos, setPhotos] = useState({});
   const [fullData, setFullData] = useState({});
+  const [seasons, setSeasons] = useState([]); // Stocker les saisons disponibles
+  const [selectedSeason, setSelectedSeason] = useState(""); // Année sélectionnée
 
   useEffect(() => {
-    fetch("https://ergast.com/api/f1/current/last/qualifying.json")
+    fetch("https://ergast.com/api/f1/seasons.json?limit=100&offset=8")
       .then((res) => res.json())
       .then((data) => {
-        const results = data.MRData.RaceTable.Races[0].QualifyingResults || [];
-        setResultat(data.MRData.RaceTable.Races[0].QualifyingResults);
-        setFullData(data.MRData.RaceTable);
+        const allSeasons = data.MRData.SeasonTable.Seasons || [];
+        setSeasons(allSeasons);
+        setSelectedSeason(allSeasons[allSeasons.length - 1].season); // Année actuelle par défaut
+      })
+      .catch((error) => {
+        console.error("Error fetching seasons:", error);
+        setHasError(true);
+        setIsLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (!selectedSeason) return;
+    setIsLoading(true);
+    fetch(
+      `https://ergast.com/api/f1/${selectedSeason}/constructorStandings.json`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        const results =
+          data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings ||
+          [];
+        setResultat(
+          data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings
+        );
+        setFullData(data.MRData.StandingsTable);
         setIsLoading(false);
 
         results.forEach((item) => {
-          const driverWikiUrl = item.Driver.url; // Récupération de l'URL Wikipedia pour chaque pilote
-          const wikiPageTitle = driverWikiUrl.split("/").pop(); // Extraction du titre de la page Wikipedia
-          fetchWikipediaImage(wikiPageTitle, item.Driver.driverId);
+          const constructorId = item.Constructor.constructorId;
+          fetchTeamLogo(constructorId); // Appel à ta nouvelle fonction
         });
       })
       .catch((error) => {
@@ -30,34 +54,42 @@ const Fetchconstruct = () => {
         setHasError(true);
         setIsLoading(false);
       });
-  }, []);
+  }, [selectedSeason]);
 
-  const fetchWikipediaImage = (wikiPageTitle, driverId) => {
-    const apiUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&prop=pageimages&titles=${encodeURIComponent(
-      wikiPageTitle
-    )}&origin=*&pithumbsize=100`;
+  const fetchTeamLogo = (constructorId) => {
+    const logoUrl = teamLogos[constructorId];
+    if (logoUrl) {
+      setPhotos((prevPhotos) => ({
+        ...prevPhotos,
+        [constructorId]: logoUrl, // Utilisation de l'ID de l'écurie comme clé
+      }));
+    } else {
+      console.log(`No logo found for ${constructorId}`);
+    }
+  };
 
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((data) => {
-        const pages = data.query.pages;
-        const page = Object.values(pages)[0];
-        if (page && page.thumbnail) {
-          setPhotos((prevPhotos) => ({
-            ...prevPhotos,
-            [driverId]: page.thumbnail.source, // Utiliser l'ID du pilote comme clé
-          }));
-        } else {
-          console.log(`No image found for ${wikiPageTitle}`);
-        }
-      })
-      .catch((error) =>
-        console.error("Error fetching Wikipedia image:", error)
-      );
+  const teamLogos = {
+    mercedes:
+      "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/mercedes",
+    red_bull:
+      "https://cms.rhinoshield.app/public/images/small_ip_page_oracle_redbull_racing_icon_aa281a3ebc.jpg",
+    ferrari:
+      "https://assets.turbologo.com/blog/fr/2019/10/19134216/ferrari-logo-illustration-958x575.jpg",
+    mclaren:
+      "https://static.vecteezy.com/ti/vecteur-libre/p1/20500446-mclaren-marque-logo-voiture-symbole-nom-orange-conception-britanique-voiture-vecteur-illustration-gratuit-vectoriel.jpg",
+    aston_martin:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOrPJYEcn4sxjg7ew4Lv_LGHxQqsebR5XscA&s",
+    rb: "https://media.formula1.com/image/upload/f_auto,c_limit,q_75,w_1320/content/dam/fom-website/2018-redesign-assets/team%20logos/rb",
+    haas: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTbsJIjtmS_NZAPoNbIp6x2Hp6lgLldZIGjAw&s",
+    williams:
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Williamsracing-20200530-0001.jpg/220px-Williamsracing-20200530-0001.jpg",
+    alpine:
+      "https://upload.wikimedia.org/wikipedia/fr/thumb/b/b7/Alpine_F1_Team_2021_Logo.svg/3543px-Alpine_F1_Team_2021_Logo.svg.png",
+    sauber: "https://cdn.worldvectorlogo.com/logos/sauber-f1-team.svg",
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <Skeleton />;
   }
 
   if (hasError) {
@@ -109,29 +141,35 @@ const Fetchconstruct = () => {
     Liechtensteiner: "🇱🇮",
   };
 
+  const medalIcons = {
+    1: "🥇",
+    2: "🥈",
+    3: "🥉",
+  };
+
   return (
-    <div>
+    <div className="overflow-x-auto w-5/6 place-content-center">
       <div className="flex flex-row- justify-between items-center m-5 bg-base-200 p-3 rounded">
         <div>
           <h1 className="text-xl font-medium">
-            Les derniers résultats de qualifications
+            Les résultats constructeurs actuels
           </h1>
-          <p className="text-sm opacity-70">Informations de la course</p>
+          <p className="text-sm opacity-70">Informations des constructeurs</p>
         </div>
         <div className="flex gap-5 flex-row">
           <div>
-            <p className="text-sm opacity-70">Circuit</p>
-            <p className="text-sm">{fullData.Races[0].Circuit.circuitName}</p>
-          </div>
-          <div>
-            <p className="text-sm opacity-70">Ville</p>
-            <p className="text-sm">
-              {fullData.Races[0].Circuit.Location.country}
-            </p>
-          </div>
-          <div>
-            <p className="text-sm opacity-70">Date</p>
-            <p className="text-sm">{fullData.Races[0].date}</p>
+            <p className="text-sm opacity-70">Choisir une saison</p>
+            <select
+              value={selectedSeason}
+              onChange={(e) => setSelectedSeason(e.target.value)}
+              className="select select-bordered"
+            >
+              {seasons.map((season) => (
+                <option key={season.season} value={season.season}>
+                  {season.season}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
@@ -140,11 +178,9 @@ const Fetchconstruct = () => {
         <thead>
           <tr>
             <th>Place</th>
-            <th>Nom</th>
             <th>Constructeur</th>
-            <th>Q1</th>
-            <th>Q2</th>
-            <th>Q3</th>
+            <th>Points</th>
+            <th>Victoires</th>
             <th></th>
           </tr>
         </thead>
@@ -158,54 +194,42 @@ const Fetchconstruct = () => {
                     <div className="mask mask-squircle h-12 w-12">
                       <img
                         src={
-                          photos[item.Driver.driverId] ||
+                          photos[item.Constructor.constructorId] ||
                           "https://img.daisyui.com/images/profile/demo/2@94.webp"
                         }
-                        alt={`${item.Driver.givenName} ${item.Driver.familyName}`}
+                        alt={item.Constructor.name}
                       />
                     </div>
                   </div>
                   <div>
                     <div className="font-bold">
-                      {`${item.Driver.givenName} ${item.Driver.familyName}`}
+                      {`${item.Constructor.name}`}
                     </div>
                     <div className="text-sm opacity-50">
                       {/* Récupération du drapeau en fonction de la nationalité */}
-                      {item.Driver.nationality}{" "}
-                      {flags[item.Driver.nationality] || "🏳"}
+                      {item.Constructor.nationality}{" "}
+                      {flags[item.Constructor.nationality] || "🏳"}
                     </div>
                   </div>
                 </div>
               </td>
               <td>
-                <span className="badge badge-ghost badge-sm">
-                  {item.Constructor.name}{" "}
-                  {flags[item.Constructor.nationality] || "🏳"}
-                </span>
-              </td>
-              <td>{item.Q1}</td>
-              <td>
-                {item.Q2 ? (
-                  item.Q2
-                ) : (
-                  <span className="badge badge-neutral badge-sm">
-                    Éliminé🏁
-                  </span>
-                )}
+                {item.points}{" "}
+                {item.position === "1" && <span>{medalIcons[1]}</span>}
+                {item.position === "2" && <span>{medalIcons[2]}</span>}
+                {item.position === "3" && <span>{medalIcons[3]}</span>}
               </td>
               <td>
-                {item.Q3 ? (
-                  item.Q3
+                {item.wins ? (
+                  item.wins
                 ) : (
-                  <span className="badge badge-neutral badge-sm">
-                    Éliminé🏁
-                  </span>
+                  <span className="badge badge-neutral badge-sm">0</span>
                 )}
               </td>
               <td>
                 <a
                   target="_blank"
-                  href={item.Driver.url}
+                  href={item.Constructor.url}
                   className="btn btn-ghost btn-xs"
                 >
                   En voir plus
@@ -218,11 +242,9 @@ const Fetchconstruct = () => {
         <tfoot>
           <tr>
             <th>Place</th>
-            <th>Nom</th>
             <th>Constructeur</th>
-            <th>Q1</th>
-            <th>Q2</th>
-            <th>Q3</th>
+            <th>Points</th>
+            <th>Victoires</th>
             <th></th>
           </tr>
         </tfoot>
