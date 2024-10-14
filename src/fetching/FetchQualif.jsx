@@ -7,7 +7,6 @@ const Fetchqualifs = () => {
   const [resultat, setResultat] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
-  const [fastestDriverIndex, setFastestDriverIndex] = useState(null);
   const [photos, setPhotos] = useState({});
   const [fullData, setFullData] = useState({});
 

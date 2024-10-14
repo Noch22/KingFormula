@@ -2,6 +2,8 @@ import React from "react";
 import Header from "../components/header";
 import { Link } from "react-router-dom";
 import FetchHome from "../fetching/FetchHome";
+import Racesingle from "../components/Racesingle";
+import FetchRaces from "../fetching/FetchRaces";
 
 export default function home() {
   return (
@@ -25,6 +27,9 @@ export default function home() {
           </div>
         </div>
         <FetchHome />
+      </div>
+      <div className="w-full flex justify-center items-center">
+        <FetchRaces />
       </div>
     </main>
   );
