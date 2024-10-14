@@ -91,19 +91,22 @@ const Fetchsearch = () => {
     <div className="overflow-x-auto w-5/6 place-content-center">
       <div className="overflow-x-auto">
         <div className="form">
-          <div className="flex justify-center w-full">
-            <label htmlFor="nom">Nom du pilote</label>
-            <input
-              type="text"
-              placeholder="Type here"
-              className="input input-bordered w-full max-w-xs"
-              value={piloteNom}
-              onChange={(e) => setPiloteNom(e.target.value)} // Update piloteNom state
-              required={true}
-            />
-            <button className="btn" onClick={handleSearch}>
-              Chercher
-            </button>
+          <div className="flex justify-center w-full items-center gap-2">
+            <label htmlFor="type">Séléctionnez un type de recherche :</label>
+            <select
+              name="type"
+              className="select select-bordered w-full max-w-xs"
+            >
+              <option disabled selected>
+                Type de recherche
+              </option>
+              <option>Pilote</option>
+              <option>Écurie</option>
+              <option>Circuit</option>
+              <option>Année</option>
+              <option>Course</option>
+              <option>Classement</option>
+            </select>
           </div>
           {/* Display no results only if a search was made and there's no result */}
           {searched && resultat.length === 0 && !isLoading && (

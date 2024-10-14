@@ -29,7 +29,6 @@ const Fetchpit = () => {
         setResultat(pitStopsByDriver);
         setFullData(data.MRData.RaceTable);
         setIsLoading(false);
-        console.log(pitStopsByDriver);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
