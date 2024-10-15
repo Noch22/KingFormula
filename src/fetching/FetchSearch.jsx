@@ -3,24 +3,23 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 const Fetchsearch = () => {
-  const [resultat, setResultat] = useState([]);
   const [isLoading, setIsLoading] = useState(false); // Changed to false initially
   const [hasError, setHasError] = useState(false);
   const [fullData, setFullData] = useState({});
   const [piloteNom, setPiloteNom] = useState(""); // State to store pilot name
-  const [searched, setSearched] = useState(false); // To track if a search was made
+  const [ecurieNom, setEcurieNom] = useState(""); // Pour l'écurie
+  const [annee, setAnnee] = useState(""); // Pour l'année
+  const [circuitNom, setCircuitNom] = useState(""); // Pour le circuit
+  const [searchType, setSearchType] = useState(""); // Stocke le type de recherche
 
-  const fetchData = (nomPilote) => {
+  const fetchData = (endpoint) => {
     setIsLoading(true);
-    setSearched(true); // Mark that a search was made
-    fetch(`http://ergast.com/api/f1/drivers/${nomPilote}.json`)
+    fetch(endpoint)
       .then((res) => res.json())
       .then((data) => {
-        const pitStopsByDriver = data.MRData.DriverTable.Drivers || {};
-        setResultat(pitStopsByDriver);
-        console.log(resultat);
         setFullData(data.MRData.RaceTable);
         setIsLoading(false);
+        console.log(data);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -30,8 +29,151 @@ const Fetchsearch = () => {
   };
 
   const handleSearch = () => {
-    if (piloteNom.trim()) {
-      fetchData(piloteNom);
+    let endpoint = "";
+    if (searchType === "Pilote" && piloteNom.trim()) {
+      endpoint = `http://ergast.com/api/f1/drivers/${piloteNom}.json`;
+    } else if (searchType === "Écurie" && ecurieNom.trim()) {
+      endpoint = `http://ergast.com/api/f1/constructors/${ecurieNom}.json`;
+    } else if (searchType === "Année" && annee.trim()) {
+      endpoint = `http://ergast.com/api/f1/${annee}.json`;
+    } else if (searchType === "Circuit" && circuitNom.trim()) {
+      endpoint = `http://ergast.com/api/f1/circuits/${circuitNom}.json`;
+    }
+
+    if (endpoint) {
+      fetchData(endpoint);
+    }
+  };
+
+  const renderForm = () => {
+    switch (searchType) {
+      case "Pilote":
+        return (
+          <input
+            type="text"
+            value={piloteNom}
+            onChange={(e) => setPiloteNom(e.target.value)}
+            placeholder="Entrez le nom du pilote"
+            className="input input-bordered w-full max-w-xs"
+          />
+        );
+      case "Écurie":
+        return (
+          <input
+            type="text"
+            value={ecurieNom}
+            onChange={(e) => setEcurieNom(e.target.value)}
+            placeholder="Entrez le nom de l'écurie"
+            className="input input-bordered w-full max-w-xs"
+          />
+        );
+      case "Année":
+        return (
+          <input
+            type="text"
+            value={annee}
+            onChange={(e) => setAnnee(e.target.value)}
+            placeholder="Entrez l'année"
+            className="input input-bordered w-full max-w-xs"
+          />
+        );
+      case "Circuit":
+        return (
+          <input
+            type="text"
+            value={circuitNom}
+            onChange={(e) => setCircuitNom(e.target.value)}
+            placeholder="Entrez le nom du circuit"
+            className="input input-bordered w-full max-w-xs"
+          />
+        );
+      default:
+        return null;
+    }
+  };
+
+  const renderResult = () => {
+    if (!fullData || fullData.length === 0) {
+      return <p>Aucun résultat trouvé.</p>;
+    }
+
+    switch (searchType) {
+      case "Pilote":
+        return (
+          <div className="result">
+            {fullData.map((pilote, index) => (
+              <div key={index} className="card bg-base-100 shadow-xl p-4">
+                <h3 className="text-lg font-bold">
+                  {pilote.givenName} {pilote.familyName}
+                </h3>
+                <p>
+                  <strong>Date de naissance :</strong> {pilote.dateOfBirth}
+                </p>
+                <p>
+                  <strong>Nationalité :</strong> {pilote.nationality}
+                </p>
+                <p>
+                  <strong>Code :</strong> {pilote.code}
+                </p>
+              </div>
+            ))}
+          </div>
+        );
+
+      case "Écurie":
+        return (
+          <div className="result">
+            {fullData.map((ecurie, index) => (
+              <div key={index} className="card bg-base-100 shadow-xl p-4">
+                <h3 className="text-lg font-bold">{ecurie.name}</h3>
+                <p>
+                  <strong>Nationalité :</strong> {ecurie.nationality}
+                </p>
+              </div>
+            ))}
+          </div>
+        );
+
+      case "Circuit":
+        return (
+          <div className="result">
+            {fullData.map((circuit, index) => (
+              <div key={index} className="card bg-base-100 shadow-xl p-4">
+                <h3 className="text-lg font-bold">{circuit.circuitName}</h3>
+                <p>
+                  <strong>Localisation :</strong> {circuit.Location.locality},{" "}
+                  {circuit.Location.country}
+                </p>
+              </div>
+            ))}
+          </div>
+        );
+
+      case "Année":
+        return (
+          <div className="result">
+            {fullData.Races && fullData.Races.length > 0 ? (
+              fullData.Races.map((race, index) => (
+                <div key={index} className="card bg-base-100 shadow-xl p-4">
+                  <h3 className="text-lg font-bold">{race.raceName}</h3>
+                  <p>
+                    <strong>Date :</strong> {race.date}
+                  </p>
+                  <p>
+                    <strong>Lieu :</strong> {race.Circuit.circuitName} (
+                    {race.Circuit.Location.locality},{" "}
+                    {race.Circuit.Location.country})
+                  </p>
+                </div>
+              ))
+            ) : (
+              <p>Aucune course trouvée pour l'année {annee}</p>
+            )}
+          </div>
+        );
+
+      default:
+        return null;
     }
   };
 
@@ -92,10 +234,10 @@ const Fetchsearch = () => {
       <div className="overflow-x-auto">
         <div className="form">
           <div className="flex justify-center w-full items-center gap-2">
-            <label htmlFor="type">Séléctionnez un type de recherche :</label>
             <select
               name="type"
               className="select select-bordered w-full max-w-xs"
+              onChange={(e) => setSearchType(e.target.value)}
             >
               <option disabled selected>
                 Type de recherche
@@ -108,39 +250,16 @@ const Fetchsearch = () => {
               <option>Classement</option>
             </select>
           </div>
-          {/* Display no results only if a search was made and there's no result */}
-          {searched && resultat.length === 0 && !isLoading && (
-            <p>No results available.</p>
-          )}
+          <div className="flex justify-center w-full items-center gap-2 mt-4">
+            {renderForm()}
+          </div>
+          <div className="flex justify-center w-full items-center gap-2 mt-4">
+            <button onClick={handleSearch} className="btn btn-primary">
+              Rechercher
+            </button>
+          </div>
+          <div className="mt-8">{renderResult()}</div>
         </div>
-        {resultat.length > 0 && (
-          <table className="table table-zebra">
-            <thead>
-              <tr>
-                <th>ID de pilote</th>
-                <th>Numéro</th>
-                <th>Code pilote</th>
-                <th>Nom prénom</th>
-                <th>Date de naissance</th>
-                <th>Nationalitée</th>
-              </tr>
-            </thead>
-            <tbody>
-              {resultat.map((data, index) => (
-                <tr key={index}>
-                  <td>{data.driverId}</td>
-                  <td>{data.permanentNumber ? data.permanentNumber : "N/A"}</td>
-                  <td>{data.code}</td>
-                  <td>
-                    {data.givenName} {data.familyName}
-                  </td>
-                  <td>{data.dateOfBirth}</td>
-                  <td>{data.nationality}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
       </div>
     </div>
   );
