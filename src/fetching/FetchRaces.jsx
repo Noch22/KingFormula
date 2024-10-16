@@ -70,26 +70,31 @@ export default function FetchRaces() {
   }
 
   return (
-    <div className="grid grid-cols-3 w-5/6 place-content-center gap-10">
-      {resultat.map(
-        (resultat, index) => (
-          console.log(new Date().toLocaleDateString("fr-FR")),
-          (
-            <Racesingle
-              key={index}
-              title={resultat.raceName}
-              country={resultat.Circuit.Location.country}
-              city={resultat.Circuit.Location.locality}
-              image={photos[resultat.Circuit.circuitId]}
-              link={resultat.Circuit.url}
-              date={resultat.date}
-              badge={
-                new Date(resultat.date) >= new Date() ? "À venir" : "Terminée"
-              }
-            />
+    <div className="w-full flex flex-col items-center justify-center">
+      <h2 className="font-mono text-2xl font-bold p-8">
+        Édition {new Date().getFullYear()}
+      </h2>
+      <div className="grid grid-cols-3 w-5/6 place-content-center gap-10">
+        {resultat.map(
+          (resultat, index) => (
+            console.log(new Date().toLocaleDateString("fr-FR")),
+            (
+              <Racesingle
+                key={index}
+                title={resultat.raceName}
+                country={resultat.Circuit.Location.country}
+                city={resultat.Circuit.Location.locality}
+                image={photos[resultat.Circuit.circuitId]}
+                link={resultat.Circuit.url}
+                date={resultat.date}
+                badge={
+                  new Date(resultat.date) >= new Date() ? "À venir" : "Terminée"
+                }
+              />
+            )
           )
-        )
-      )}
+        )}
+      </div>
     </div>
   );
 }
