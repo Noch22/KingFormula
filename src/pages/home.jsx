@@ -10,9 +10,9 @@ export default function home() {
     <main>
       <Header active="home" />
       <div>
-        <div className="hero bg-base-200 h-full">
+        <div className="hero bg-base-200 h-full md:mb-2 mb-20">
           <div className="hero-content flex-col lg:flex-row-reverse">
-            <img src="/image.jpeg" className="max-w-sm rounded-lg shadow-2xl" />
+            <img src="/image.jpeg" className="max-w-xs rounded-lg shadow-2xl" />
             <div>
               <h1 className="text-5xl font-king-font">KingFormula®</h1>
               <p className="py-6">

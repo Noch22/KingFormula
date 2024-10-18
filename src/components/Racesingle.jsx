@@ -5,7 +5,7 @@ import { cn } from "../utils";
 export default function Racesingle(props) {
   return (
     <>
-      <div className="card bg-base-100 w-96 shadow-xl">
+      <div className="card bg-base-100 w-80 shadow-xl">
         <figure>
           <img src={props.image} />
         </figure>

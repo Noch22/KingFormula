@@ -74,7 +74,7 @@ export default function FetchRaces() {
       <h2 className="font-mono text-2xl font-bold p-8">
         Édition {new Date().getFullYear()}
       </h2>
-      <div className="grid grid-cols-3 w-5/6 place-content-center gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 w-5/6 place-content-center gap-10">
         {resultat.map(
           (resultat, index) => (
             console.log(new Date().toLocaleDateString("fr-FR")),
