@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Skeleton from "../components/skeleton";
+import Lastresultresponsive from "../components/Lastresultresponsive";
 
 const FetchLast = () => {
   const [resultat, setResultat] = useState([]);
@@ -131,30 +132,30 @@ const FetchLast = () => {
 
   return (
     <div className="overflow-x-auto w-5/6 place-content-center">
-      <div className="flex flex-row- justify-between items-center m-5 bg-base-200 p-3 rounded">
+      <div className="flex flex-col md:flex-row justify-between items-center m-5 bg-base-200 p-3 rounded">
         <div>
           <h1 className="text-xl font-medium">Les derniers résultats</h1>
           <p className="text-sm opacity-70">Informations de la course</p>
         </div>
-        <div className="flex gap-5 flex-row">
-          <div>
+        <div className="flex gap-2 md:gap-5 flex-row">
+          <div className="flex-1">
             <p className="text-sm opacity-70">Circuit</p>
             <p className="text-sm">{fullData.Races[0].Circuit.circuitName}</p>
           </div>
-          <div>
+          <div className="flex-1">
             <p className="text-sm opacity-70">Ville</p>
             <p className="text-sm">
               {fullData.Races[0].Circuit.Location.country}
             </p>
           </div>
-          <div>
+          <div className="flex-1">
             {" "}
             <p className="text-sm opacity-70">Date</p>
             <p className="text-sm">{fullData.Races[0].date}</p>
           </div>
         </div>
       </div>
-      <table className="table">
+      <table className="hidden md:table">
         {/* head */}
         <thead>
           <tr>
@@ -221,8 +222,9 @@ const FetchLast = () => {
               </td>
               <td>{item.laps}</td>
               <td className="flex flex-col items-center justify-center">
-                {item.FastestLap.Time.time} (Tour {item.FastestLap.lap}){" "}
-                {item.FastestLap.rank === "1" && (
+                {item.FastestLap?.Time?.time || "N/A"} (Tour{" "}
+                {item.FastestLap?.lap}){" "}
+                {item.FastestLap?.rank === "1" && (
                   <span className="indicator-item badge badge-primary ml-2">
                     meilleur tour🚀
                   </span>
@@ -251,6 +253,17 @@ const FetchLast = () => {
           </tr>
         </tfoot>
       </table>
+      <div className="cards-mobile flex flex-col md:hidden">
+        {resultat.map((item, index) => (
+          <Lastresultresponsive
+            avatarurl={
+              photos[item.Driver.driverId] ||
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/800px-No_image_available.svg.png"
+            }
+            name={`${item.Driver.givenName} ${item.Driver.familyName}`}
+          />
+        ))}
+      </div>
     </div>
   );
 };
