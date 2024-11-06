@@ -125,13 +125,13 @@ const FetchLast = () => {
   };
 
   const medalIcons = {
-    25: "🥇",
-    18: "🥈",
-    15: "🥉",
+    1: "🥇",
+    2: "🥈",
+    3: "🥉",
   };
 
   return (
-    <div className="overflow-x-auto w-5/6 place-content-center">
+    <div className="overflow-x-auto w-full md:w-5/6 place-content-center">
       <div className="flex flex-col md:flex-row justify-between items-center m-5 bg-base-200 p-3 rounded">
         <div>
           <h1 className="text-xl font-medium">Les derniers résultats</h1>
@@ -216,8 +216,8 @@ const FetchLast = () => {
               </td>
               <td>
                 {item.points}{" "}
-                {medalIcons[item.points] && (
-                  <span>{medalIcons[item.points]}</span>
+                {medalIcons[item.position] && (
+                  <span>{medalIcons[item.position]}</span>
                 )}
               </td>
               <td>{item.laps}</td>
@@ -253,14 +253,32 @@ const FetchLast = () => {
           </tr>
         </tfoot>
       </table>
-      <div className="cards-mobile flex flex-col md:hidden">
+      <div className="cards-mobile flex flex-col md:hidden w-full">
         {resultat.map((item, index) => (
           <Lastresultresponsive
+            key={index}
             avatarurl={
               photos[item.Driver.driverId] ||
               "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/800px-No_image_available.svg.png"
             }
             name={`${item.Driver.givenName} ${item.Driver.familyName}`}
+            nationality={item.Driver.nationality}
+            flag={flags[item.Driver.nationality] || "🏳"}
+            constructeur={`${item.Constructor.name}${" "}
+            ${flags[item.Constructor.nationality] || "🏳"}`}
+            vitesse={`${
+              item.FastestLap?.AverageSpeed?.speed || "N/A"
+            } Km/h${" "}
+            `}
+            isFastest={index === fastestDriverIndex}
+            points={item.points}
+            tours={item.laps}
+            besttour={`${item.FastestLap?.Time?.time || "N/A"} (Tour ${
+              item.FastestLap?.lap
+            })${" "}
+            `}
+            fastestLap={item.FastestLap?.rank === "1"}
+            place={item.position}
           />
         ))}
       </div>

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/home";
@@ -10,8 +9,6 @@ import Pit from "./pages/pit";
 import Search from "./pages/search";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
     <>
       <BrowserRouter>
