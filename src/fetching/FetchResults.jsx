@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import Cardresult from "../components/cardResult";
+import Cardresult from "../components/Cardresult";
 
 const FetchResults = () => {
   const [resultat, setResultat] = useState([]);
