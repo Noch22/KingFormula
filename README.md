@@ -1,4 +1,5 @@
 ![bannière titre KingFormula avec en arrière plan des formules 1 dessinées générées par IA Photo!](public/banniere.webp)
+[<img alt="Deployed with FTP Deploy Action" src="https://img.shields.io/badge/Deployed With-FTP DEPLOY ACTION-%3CCOLOR%3E?style=for-the-badge&color=0077b6">](https://github.com/SamKirkland/FTP-Deploy-Action)
 
 # King Formula - ETL données de Formule 1
 J'utilise l'API [Ergast](https://www.ergast.com) pour récupérer les données.
