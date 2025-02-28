@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Skeleton from "../components/skeleton";
 import Lastresultresponsive from "../components/Lastresultresponsive";
+import { Toaster, toast } from "sonner";
 
 const FetchLast = () => {
   const [resultat, setResultat] = useState([]);
@@ -63,7 +64,7 @@ const FetchLast = () => {
             [driverId]: page.thumbnail.source, // Utiliser l'ID du pilote comme clé
           }));
         } else {
-          console.log(`No image found for ${wikiPageTitle}`);
+          toast.error(`Aucune image trouvée pour ${wikiPageTitle}`);
         }
       })
       .catch((error) =>
@@ -132,6 +133,7 @@ const FetchLast = () => {
 
   return (
     <div className="overflow-x-auto w-full md:w-5/6 place-content-center">
+      <Toaster richColors />
       <div className="flex flex-col md:flex-row justify-between items-center m-5 bg-base-200 p-3 rounded">
         <div>
           <h1 className="text-xl font-medium">Les derniers résultats</h1>

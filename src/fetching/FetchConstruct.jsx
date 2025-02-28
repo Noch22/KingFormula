@@ -1,5 +1,6 @@
 import React from "react";
 import Skeleton from "../components/skeleton";
+import { Toaster, toast } from "sonner";
 
 import { useState, useEffect } from "react";
 
@@ -64,7 +65,7 @@ const Fetchconstruct = () => {
         [constructorId]: logoUrl, // Utilisation de l'ID de l'écurie comme clé
       }));
     } else {
-      console.log(`No logo found for ${constructorId}`);
+      toast(`No logo found for ${constructorId}`);
     }
   };
 
@@ -149,6 +150,7 @@ const Fetchconstruct = () => {
 
   return (
     <div className="overflow-x-auto w-5/6 place-content-center">
+      <Toaster />
       <div className="flex flex-row- justify-between items-center m-5 bg-base-200 p-3 rounded">
         <div>
           <h1 className="text-xl font-medium">

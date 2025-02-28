@@ -18,7 +18,6 @@ export default function FetchRaces() {
         setResultat(data.MRData.RaceTable.Races);
         setFullData(data.MRData.RaceTable);
         setIsLoading(false);
-        console.log(results);
 
         results.forEach((item) => {
           const driverWikiUrl = item.url; // Récupération de l'URL Wikipedia pour chaque pilote
@@ -27,7 +26,6 @@ export default function FetchRaces() {
         });
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
         setHasError(true);
         setIsLoading(false);
       });
@@ -49,7 +47,6 @@ export default function FetchRaces() {
             [circuitId]: page.thumbnail.source, // Utiliser l'ID du pilote comme clé
           }));
         } else {
-          console.log(`No image found for ${wikiPageTitle}`);
         }
       })
       .catch((error) =>
@@ -75,25 +72,20 @@ export default function FetchRaces() {
         Édition {new Date().getFullYear()}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-3 w-5/6 place-content-center gap-10">
-        {resultat.map(
-          (resultat, index) => (
-            console.log(new Date().toLocaleDateString("fr-FR")),
-            (
-              <Racesingle
-                key={index}
-                title={resultat.raceName}
-                country={resultat.Circuit.Location.country}
-                city={resultat.Circuit.Location.locality}
-                image={photos[resultat.Circuit.circuitId]}
-                link={resultat.Circuit.url}
-                date={resultat.date}
-                badge={
-                  new Date(resultat.date) >= new Date() ? "À venir" : "Terminée"
-                }
-              />
-            )
-          )
-        )}
+        {resultat.map((resultat, index) => (
+          <Racesingle
+            key={index}
+            title={resultat.raceName}
+            country={resultat.Circuit.Location.country}
+            city={resultat.Circuit.Location.locality}
+            image={photos[resultat.Circuit.circuitId]}
+            link={resultat.Circuit.url}
+            date={resultat.date}
+            badge={
+              new Date(resultat.date) >= new Date() ? "À venir" : "Terminée"
+            }
+          />
+        ))}
       </div>
     </div>
   );
