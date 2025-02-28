@@ -26,4 +26,4 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./dist/
-          server-dir: home/pigu9463/node.pigu9463.odns.fr/
+          server-dir: node.pigu9463.odns.fr/
