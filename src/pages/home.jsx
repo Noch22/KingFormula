@@ -18,7 +18,7 @@ export default function home() {
               <p className="py-6">
                 Découvrez les derniers résultats de la Formule 1 sur
                 KingFormula®. Visitez les différentes pages pour en savoir plus
-                sur les pilotes, les équipes et les circuits.
+                sur les pilotes, les équipes et les circuits. Développement en cours !
               </p>
               <Link to="/last" className="btn btn-secondary">
                 Voir les derniers résultats sur KingFormula®
