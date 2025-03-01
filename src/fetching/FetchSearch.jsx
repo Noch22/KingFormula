@@ -242,9 +242,7 @@ const Fetchsearch = () => {
               onChange={handleSearchTypeChange}
               value={searchType}
             >
-              <option disabled selected>
-                Type de recherche
-              </option>
+              <option hidden>Type de recherche</option>
               <option>Pilote</option>
               <option>Écurie</option>
               <option>Année</option>

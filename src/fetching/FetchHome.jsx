@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast, Toaster } from "sonner";
 
 const FetchHome = () => {
   const [resultat, setResultat] = useState([]);
@@ -7,10 +8,12 @@ const FetchHome = () => {
     fetch("https://ergast.com/api/f1/current/next.json")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setResultat(data.MRData.RaceTable.Races[0]);
       })
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => (
+        console.error("Error fetching data:", error),
+        toast.error(`Aucune image trouvée pour ${error}`)
+      ));
   }, []);
 
   if (!resultat) {
