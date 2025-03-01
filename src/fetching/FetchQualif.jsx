@@ -1,5 +1,6 @@
 import React from "react";
 import Skeleton from "../components/skeleton";
+import { Toaster, toast } from "sonner";
 
 import { useState, useEffect } from "react";
 
@@ -48,7 +49,7 @@ const Fetchqualifs = () => {
             [driverId]: page.thumbnail.source, // Utiliser l'ID du pilote comme clé
           }));
         } else {
-          console.log(`No image found for ${wikiPageTitle}`);
+          toast.error(`Aucune image trouvée pour ${wikiPageTitle}`);
         }
       })
       .catch((error) =>
@@ -111,6 +112,7 @@ const Fetchqualifs = () => {
 
   return (
     <div className="overflow-x-auto w-5/6 place-content-center">
+      <Toaster richColors />
       <div className="flex flex-row- justify-between items-center m-5 bg-base-200 p-3 rounded">
         <div>
           <h1 className="text-xl font-medium">
