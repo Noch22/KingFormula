@@ -135,22 +135,22 @@ const FetchLast = () => {
     <div className="overflow-x-auto w-full md:w-5/6 place-content-center">
       <Toaster richColors />
       <div className="flex flex-col md:flex-row justify-between items-center m-5 bg-base-200 p-3 rounded">
-        <div>
+        <div className="w-1/2">
           <h1 className="text-xl font-medium">Les derniers résultats</h1>
           <p className="text-sm opacity-70">Informations de la course</p>
         </div>
-        <div className="flex gap-2 md:gap-5 flex-row">
-          <div className="flex-1">
+        <div className="flex gap-2 md:gap-5 flex-row w-1/2">
+          <div className="flex-1 items-center">
             <p className="text-sm opacity-70">Circuit</p>
             <p className="text-sm">{fullData.Races[0].Circuit.circuitName}</p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 items-center">
             <p className="text-sm opacity-70">Ville</p>
             <p className="text-sm">
               {fullData.Races[0].Circuit.Location.country}
             </p>
           </div>
-          <div className="flex-1">
+          <div className="flex-1 items-center">
             {" "}
             <p className="text-sm opacity-70">Date</p>
             <p className="text-sm">{fullData.Races[0].date}</p>
@@ -268,16 +268,14 @@ const FetchLast = () => {
             flag={flags[item.Driver.nationality] || "🏳"}
             constructeur={`${item.Constructor.name}${" "}
             ${flags[item.Constructor.nationality] || "🏳"}`}
-            vitesse={`${
-              item.FastestLap?.AverageSpeed?.speed || "N/A"
-            } Km/h${" "}
+            vitesse={`${item.FastestLap?.AverageSpeed?.speed || "N/A"
+              } Km/h${" "}
             `}
             isFastest={index === fastestDriverIndex}
             points={item.points}
             tours={item.laps}
-            besttour={`${item.FastestLap?.Time?.time || "N/A"} (Tour ${
-              item.FastestLap?.lap
-            })${" "}
+            besttour={`${item.FastestLap?.Time?.time || "N/A"} (Tour ${item.FastestLap?.lap
+              })${" "}
             `}
             fastestLap={item.FastestLap?.rank === "1"}
             place={item.position}
