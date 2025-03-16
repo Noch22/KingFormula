@@ -1,5 +1,0 @@
----
-deployment:
-  tasks:
-    - export DEPLOYPATH=/home/pigu9463/node.pigu9463.odns.fr
-    - /bin/cp -R * $DEPLOYPATH
