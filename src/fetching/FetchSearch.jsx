@@ -17,7 +17,7 @@ const Fetchsearch = () => {
   const [selectedSeason, setSelectedSeason] = useState(""); // Année sélectionnée
 
   useEffect(() => {
-    fetch("https://ergast.com/api/f1/seasons.json?limit=100&offset=8")
+    fetch("http://api.jolpi.ca/ergast/f1/seasons.json?limit=100&offset=8")
       .then((res) => res.json())
       .then((data) => {
         const allSeasons = data.MRData.SeasonTable.Seasons || [];

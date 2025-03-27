@@ -11,7 +11,7 @@ const Fetchpit = () => {
   const [pilotes, setPilotes] = useState({});
 
   useEffect(() => {
-    fetch("https://ergast.com/api/f1/current/last/pitstops.json")
+    fetch("http://api.jolpi.ca/ergast/f1/current/last/pitstops.json")
       .then((res) => res.json())
       .then((data) => {
         // Regrouper les arrêts par pilote

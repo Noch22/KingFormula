@@ -5,7 +5,7 @@ const FetchHome = () => {
   const [resultat, setResultat] = useState([]);
 
   useEffect(() => {
-    fetch("https://ergast.com/api/f1/current/next.json")
+    fetch("http://api.jolpi.ca/ergast/f1/current/next.json")
       .then((res) => res.json())
       .then((data) => {
         setResultat(data.MRData.RaceTable.Races[0]);

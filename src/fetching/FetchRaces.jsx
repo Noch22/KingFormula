@@ -11,7 +11,7 @@ export default function FetchRaces() {
   const [fullData, setFullData] = useState({});
 
   useEffect(() => {
-    fetch("https://ergast.com/api/f1/current.json")
+    fetch("http://api.jolpi.ca/ergast/f1/current.json")
       .then((res) => res.json())
       .then((data) => {
         const results = data.MRData.RaceTable.Races || [];

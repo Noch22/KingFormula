@@ -12,7 +12,7 @@ const Fetchqualifs = () => {
   const [fullData, setFullData] = useState({});
 
   useEffect(() => {
-    fetch("https://ergast.com/api/f1/current/last/qualifying.json")
+    fetch("http://api.jolpi.ca/ergast/f1/current/last/qualifying.json")
       .then((res) => res.json())
       .then((data) => {
         const results = data.MRData.RaceTable.Races[0].QualifyingResults || [];

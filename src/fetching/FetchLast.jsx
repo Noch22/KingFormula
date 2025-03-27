@@ -12,7 +12,7 @@ const FetchLast = () => {
   const [fullData, setFullData] = useState({});
 
   useEffect(() => {
-    fetch("https://ergast.com/api/f1/current/last/results.json")
+    fetch("http://api.jolpi.ca/ergast/f1/current/last/results.json")
       .then((res) => res.json())
       .then((data) => {
         const results = data.MRData.RaceTable.Races[0].Results || [];
@@ -250,7 +250,12 @@ const FetchLast = () => {
             <th>Place</th>
             <th>Nom</th>
             <th>Constructeur</th>
-            <th>Vitesse moyenne</th>
+            <th className="flex flex-col items-center">Vitesse moyenne</th>
+            <th>Points</th>
+            <th>Tours</th>
+            <th className="flex flex-col items-center">
+              Tour le plus rapide⚡
+            </th>
             <th></th>
           </tr>
         </tfoot>
