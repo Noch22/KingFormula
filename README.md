@@ -5,7 +5,10 @@
 
 
 # King Formula - ETL données de Formule 1
-J'utilise l'API [Ergast](https://www.ergast.com) pour récupérer les données.
+Historiquement basé sur l'API [Ergast](https://ergast.com/mrd/) abandonée fin 2024, maintenant basé sur l'API [Jolpica F1](https://github.com/jolpica/jolpica-f1) pour récupérer les données.
+
+[Suivez les pilotes en direct](https://kingformula.xyz)
+
 
 ## Sommaire
 
@@ -19,6 +22,8 @@ Pour installer le projet, suivez les consignes suivantes
 1. ```git clone https://github.com/Noch22/KingFormula.git```
 
 2. Entrez dans le dossier ```cd KingFormula```
+
+3. Installez les dépendances ``` npm install ```
 
 3. Lancez l'environnement de développement ``` npm run dev ```
 
